@@ -1,0 +1,19 @@
+FROM golang:1.21-alpine
+
+# Install build dependencies and tools
+RUN apk add --no-cache git postgresql-client
+
+# Set working directory
+WORKDIR /app
+
+# Copy go mod files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Expose port
+EXPOSE 8080
+
+# Default command - keeps container running
+CMD ["tail", "-f", "/dev/null"]
